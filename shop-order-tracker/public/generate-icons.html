@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate PWA Icons</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #1976d2;
+    }
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+    .icons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .icon-item {
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>PWA Icon Generator</h1>
+  <p>This tool generates PNG icons for your PWA from the SVG icon. Click the button below to generate all required icon sizes.</p>
+  
+  <button id="generate">Generate Icons</button>
+  
+  <div class="icons-container" id="icons"></div>
+  
+  <script>
+    const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+    const svgUrl = '/icons/icon.svg';
+    
+    document.getElementById('generate').addEventListener('click', generateIcons);
+    
+    async function generateIcons() {
+      try {
+        const svgResponse = await fetch(svgUrl);
+        const svgText = await svgResponse.text();
+        
+        const iconsContainer = document.getElementById('icons');
+        iconsContainer.innerHTML = '';
+        
+        for (const size of sizes) {
+          const canvas = document.createElement('canvas');
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          
+          const img = new Image();
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, size, size);
+            
+            const iconItem = document.createElement('div');
+            iconItem.className = 'icon-item';
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = canvas.toDataURL('image/png');
+            downloadLink.download = `icon-${size}x${size}.png`;
+            downloadLink.textContent = `Download ${size}x${size}`;
+            
+            iconItem.appendChild(canvas);
+            iconItem.appendChild(downloadLink);
+            iconsContainer.appendChild(iconItem);
+          };
+          
+          // Create a Blob URL from the SVG text
+          const blob = new Blob([svgText], {type: 'image/svg+xml'});
+          const url = URL.createObjectURL(blob);
+          img.src = url;
+        }
+      } catch (error) {
+        console.error('Error generating icons:', error);
+        alert('Error generating icons. See console for details.');
+      }
+    }
+  </script>
+</body>
+</html>

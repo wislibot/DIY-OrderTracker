@@ -1,0 +1,147 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* CSS variables for viewport dimensions */
+  --viewport-width: 100vw;
+  --viewport-height: 100vh;
+  
+  /* Responsive spacing variables */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  max-width: 100vw;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Device-specific styles */
+.device-mobile {
+  --container-padding: var(--spacing-xs);
+  --element-spacing: var(--spacing-sm);
+  --font-size-base: 14px;
+  --card-width: 100%;
+}
+
+.device-tablet {
+  --container-padding: var(--spacing-md);
+  --element-spacing: var(--spacing-md);
+  --font-size-base: 16px;
+  --card-width: 85%;
+}
+
+.device-desktop {
+  --container-padding: var(--spacing-lg);
+  --element-spacing: var(--spacing-lg);
+  --font-size-base: 16px;
+  --card-width: 75%;
+}
+
+/* Responsive media queries */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8em;
+    line-height: 1.2;
+  }
+  
+  button {
+    width: 100%;
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+  }
+  
+  body {
+    font-size: var(--font-size-base, 14px);
+  }
+  
+  /* Adjust container padding based on resolution */
+  .container {
+    padding: var(--container-padding, var(--spacing-xs));
+  }
+  
+  /* Improve touch targets for mobile */
+  input, select, textarea, button {
+    min-height: 44px;
+  }
+}
+
+/* Additional responsive adjustments for safe areas on notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(var(--spacing-xs), env(safe-area-inset-left));
+    padding-right: max(var(--spacing-xs), env(safe-area-inset-right));
+    padding-bottom: max(var(--spacing-xs), env(safe-area-inset-bottom));
+  }
+}
+
+html {
+  overflow-x: hidden;
+  max-width: 100%;
+}

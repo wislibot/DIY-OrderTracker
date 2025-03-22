@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Shop Order Tracker</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+    .icon {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+      color: #1976d2;
+    }
+    h1 {
+      margin-bottom: 10px;
+      color: #1976d2;
+    }
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 1.5rem;
+    }
+    p {
+      margin-bottom: 20px;
+      max-width: 500px;
+      line-height: 1.5;
+    }
+    .feature-list {
+      text-align: left;
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+    .feature-list li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 30px;
+    }
+    .feature-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #1976d2;
+      font-weight: bold;
+    }
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      min-width: 150px;
+    }
+    button.secondary {
+      background-color: #f5f5f5;
+      color: #1976d2;
+      border: 1px solid #1976d2;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+    button.secondary:hover {
+      background-color: #e0e0e0;
+    }
+    .note {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #e3f2fd;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      max-width: 500px;
+    }
+    .offline-badge {
+      display: inline-block;
+      background-color: #ff9800;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="offline-badge">Offline Mode</span>
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+    </svg>
+    <h1>You're Offline</h1>
+    <p>Don't worry! Shop Order Tracker works offline. You can continue using most features without an internet connection.</p>
+    
+    <h2>Available Offline Features</h2>
+    <ul class="feature-list">
+      <li>View previously loaded orders</li>
+      <li>Create new orders (will sync when back online)</li>
+      <li>Edit existing orders</li>
+      <li>View statistics based on cached data</li>
+    </ul>
+    
+    <div class="buttons">
+      <button onclick="window.location.reload()">Try to Reconnect</button>
+      <button class="secondary" onclick="window.location.href='/'">Continue Offline</button>
+    </div>
+    
+    <h2>Need Full Access?</h2>
+    <p>You can create a complete offline version of this app using our offline download tool.</p>
+    
+    <div class="note">
+      <p>Your data is safely stored in your browser and will sync when you're back online.</p>
+    </div>
+  </div>
+  
+  <script>
+    // Check if we're actually offline or if this page was loaded directly
+    if (navigator.onLine) {
+      // If we're online but seeing this page, redirect to home
+      window.location.href = '/';
+    }
+    
+    // Listen for online event to redirect automatically
+    window.addEventListener('online', function() {
+      window.location.reload();
+    });
+    
+    // Add event listener for the "Continue Offline" button
+    document.querySelector('button.secondary').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = '/';
+    });
+  </script>
+</body>
+</html>
